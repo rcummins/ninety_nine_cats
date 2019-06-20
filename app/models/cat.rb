@@ -6,6 +6,6 @@ class Cat < ApplicationRecord
     validates :birth_date, :color, :name, :sex, :description, presence: true
     
     def age
-        time_ago_in_words(self.birth_date)
+        time_ago_in_words(self.birth_date).capitalize
     end
 end
