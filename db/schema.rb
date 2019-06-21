@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_205627) do
+ActiveRecord::Schema.define(version: 2019_06_21_155937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cat_rental_requests", force: :cascade do |t|
+    t.integer "cat_id", null: false
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.string "status", default: "PENDING", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cat_id"], name: "index_cat_rental_requests_on_cat_id"
+  end
 
   create_table "cats", force: :cascade do |t|
     t.date "birth_date", null: false
@@ -25,4 +35,5 @@ ActiveRecord::Schema.define(version: 2019_06_20_205627) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cat_rental_requests", "cats"
 end
