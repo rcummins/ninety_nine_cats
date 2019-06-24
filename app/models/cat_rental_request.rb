@@ -21,9 +21,33 @@ class CatRentalRequest < ApplicationRecord
             .where(status: 'APPROVED')
     end
 
+    def overlapping_pending_requests
+        self
+            .overlapping_requests
+            .where(status: 'PENDING')
+    end
+
     def does_not_overlap_approved_request
         if self.overlapping_approved_requests.exists?
             errors[:base] << 'Dates overlap with previously approved request'
+        end
+    end
+
+    def deny!
+        self.status = 'DENIED'
+        self.save!
+    end
+
+    def approve!
+        return false unless self.status == 'PENDING'
+
+        ActiveRecord::Base.transaction do
+            self.overlapping_pending_requests.each do |request|
+                request.deny!
+            end
+
+            self.status = 'APPROVED'
+            self.save!
         end
     end
 end
