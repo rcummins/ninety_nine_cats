@@ -1,7 +1,10 @@
+<h1><%= @cat.name %></h1>
+
 <table>
     <thead>
         <tr>
-            <th colspan="2"><%= @cat.name %></th>
+            <th>Attribute</th>
+            <th>Value</th>
         </tr>
     </thead>
     <tbody>
@@ -25,3 +28,24 @@
 </table>
 
 <p><%= @cat.description %></p>
+
+<h2>Rental requests</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @cat_rental_requests.each do |request| %>
+            <tr>
+                <td><%= request.start_date %></td>
+                <td><%= request.end_date %></td>
+                <td><%= request.status %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
