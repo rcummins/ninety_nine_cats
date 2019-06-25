@@ -44,6 +44,7 @@ class CatsController < ApplicationController
         if @cat.update_attributes(cat_params)
             redirect_to cat_url(@cat)
         else
+            flash.now[:errors] = @cat.errors.full_messages
             render :edit
         end
     end
