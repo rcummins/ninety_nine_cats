@@ -10,6 +10,7 @@ class CatRentalRequestsController < ApplicationController
             @cat = Cat.find_by(id: cat_rental_request_params[:cat_id])
             redirect_to cat_url(@cat)
         else
+            flash.now[:errors] = @cat_rental_request.errors.full_messages
             render :new
         end
     end

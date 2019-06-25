@@ -3,9 +3,17 @@ class CatRentalRequest < ApplicationRecord
 
     validates :status, inclusion: { in: STATUS_OPTIONS }
     validates :start_date, :end_date, :status, presence: true
+    validate :start_date_before_end_date
     validate :does_not_overlap_approved_request
 
     belongs_to :cat
+
+    def start_date_before_end_date
+        if self.start_date > self.end_date
+            errors[:start_date] << "must come before end date"
+            errors[:end_date] << "must come after start date"
+        end
+    end
 
     def overlapping_requests
         CatRentalRequest
