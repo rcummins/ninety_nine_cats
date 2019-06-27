@@ -1,4 +1,7 @@
-<form action="<%= users_url %>" method="post">
+<% action_url = ( action == :sign_up ? users_url : session_url ) %>
+<% submit_value = (action == :sign_up ? "Sign up" : " Log in" ) %>
+
+<form action="<%= action_url %>" method="post">
     
     <label for="username">Username</label>
     <input type="text" name="user[username]" id="username">
@@ -10,5 +13,5 @@
 
     <br>
 
-    <input type="submit" value="Sign up">
+    <input type="submit" value="<%= submit_value %>">
 </form>
