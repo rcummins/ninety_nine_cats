@@ -1,5 +1,6 @@
 class CatsController < ApplicationController
     before_action :deny_if_logged_out
+    before_action :only_owner_can_edit, only: [:edit, :update]
 
     def index
         @cats = Cat.all
@@ -68,5 +69,11 @@ class CatsController < ApplicationController
 
     def deny_if_logged_out
         redirect_to new_session_url unless current_user
+    end
+
+    def only_owner_can_edit
+        unless current_user.cats.find_by(id: params[:id])
+            redirect_to cats_url
+        end
     end
 end
