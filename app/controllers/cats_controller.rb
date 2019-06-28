@@ -1,4 +1,6 @@
 class CatsController < ApplicationController
+    before_action :deny_if_logged_out
+
     def index
         @cats = Cat.all
         render :index
@@ -62,5 +64,9 @@ class CatsController < ApplicationController
         params
             .require(:cat)
             .permit(:birth_date, :color, :name, :sex, :description)
+    end
+
+    def deny_if_logged_out
+        redirect_to new_session_url unless current_user
     end
 end
