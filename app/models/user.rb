@@ -4,6 +4,8 @@ class User < ApplicationRecord
     validates :session_token, presence: true, uniqueness: true
     validates :password, length: { in: 8..30 }, allow_nil: true
 
+    has_many :cats, dependent: :destroy
+
     after_initialize :ensure_session_token
     
     attr_reader :password

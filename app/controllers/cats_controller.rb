@@ -23,7 +23,7 @@ class CatsController < ApplicationController
     end
 
     def create
-        @cat = Cat.new(cat_params)
+        @cat = Cat.new(cat_params.merge({user_id: current_user.id}))
 
         if @cat.save
             redirect_to cat_url(@cat)

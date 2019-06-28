@@ -8,6 +8,7 @@ class Cat < ApplicationRecord
     validates :birth_date, :color, :name, :sex, :description, presence: true
 
     has_many :cat_rental_requests, dependent: :destroy
+    belongs_to :owner, class_name: :User, foreign_key: :user_id
 
     def age
         time_ago_in_words(self.birth_date).capitalize
