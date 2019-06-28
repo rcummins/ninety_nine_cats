@@ -2,6 +2,10 @@
 <% submit_value = (action == :sign_up ? "Sign up" : " Log in" ) %>
 
 <form action="<%= action_url %>" method="post">
+
+    <input type="hidden"
+        name="authenticity_token"
+        value="<%= form_authenticity_token %>">
     
     <label for="username">Username</label>
     <input type="text" name="user[username]" id="username">
