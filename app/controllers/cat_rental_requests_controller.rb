@@ -16,21 +16,13 @@ class CatRentalRequestsController < ApplicationController
     end
 
     def approve
-        CatRentalRequest
-            .find_by(id: params[:id])
-            .approve!
-
-        @cat = Cat.find_by(id: CatRentalRequest.find_by(id: params[:id]).cat_id)
-        redirect_to cat_url(@cat)
+        current_cat_rental_request.approve!
+        redirect_to cat_url(current_cat)
     end
 
     def deny
-        CatRentalRequest
-            .find_by(id: params[:id])
-            .deny!
-
-        @cat = Cat.find_by(id: CatRentalRequest.find_by(id: params[:id]).cat_id)
-        redirect_to cat_url(@cat)
+        current_cat_rental_request.deny!
+        redirect_to cat_url(current_cat)
     end
 
     private
@@ -39,5 +31,14 @@ class CatRentalRequestsController < ApplicationController
         params
             .require(:cat_rental_request)
             .permit(:cat_id, :start_date, :end_date, :status)
+    end
+
+    def current_cat_rental_request
+        @cat_rental_request ||=
+            CatRentalRequest.includes(:cat).find_by(id: params[:id])
+    end
+
+    def current_cat
+        current_cat_rental_request.cat
     end
 end
