@@ -5,6 +5,7 @@ class User < ApplicationRecord
     validates :password, length: { in: 8..30 }, allow_nil: true
 
     has_many :cats, dependent: :destroy
+    has_many :cat_rental_requests, dependent: :destroy
 
     after_initialize :ensure_session_token
     
