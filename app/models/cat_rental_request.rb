@@ -7,7 +7,7 @@ class CatRentalRequest < ApplicationRecord
     validate :does_not_overlap_approved_request
 
     belongs_to :cat
-    belongs_to :requester, class_name: :User
+    belongs_to :requester, class_name: :User, foreign_key: :user_id
 
     def start_date_before_end_date
         if self.start_date > self.end_date
