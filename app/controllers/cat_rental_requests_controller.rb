@@ -6,7 +6,8 @@ class CatRentalRequestsController < ApplicationController
     end
 
     def create
-        @cat_rental_request = CatRentalRequest.new(cat_rental_request_params)
+        all_params = cat_rental_request_params.merge({user_id: current_user.id})
+        @cat_rental_request = CatRentalRequest.new(all_params)
 
         if @cat_rental_request.save
             @cat = Cat.find_by(id: cat_rental_request_params[:cat_id])
