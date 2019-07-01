@@ -34,6 +34,7 @@
 <table>
     <thead>
         <tr>
+            <th>Requester</th>
             <th>Start date</th>
             <th>End date</th>
             <th>Status</th>
@@ -42,6 +43,7 @@
     <tbody>
         <% @cat_rental_requests.each do |request| %>
             <tr>
+                <td><%= request.requester.username %></td>
                 <td><%= request.start_date %></td>
                 <td><%= request.end_date %></td>
                 <td><%= request.status %></td>
